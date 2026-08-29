@@ -12,7 +12,7 @@
 - Per-app rules, settings, recents and favourites persist as Codable JSON under `~/Library/Application Support/Globalmoji/`.
 
 ## Permissions when testing locally
-- Event taps need Input Monitoring; insertion needs Accessibility. macOS ties grants to the code signature, so sign dev builds with a stable identity (see `CODE_SIGN_IDENTITY` in `project.yml`) or you'll re-grant on every rebuild.
+- Event taps need Input Monitoring; insertion needs Accessibility. TCC pins grants to the cdhash of ad-hoc signed builds, so every rebuild/reinstall silently invalidates them while System Settings still shows them on. Fix: `tccutil reset Accessibility me.bevankay.globalmoji && tccutil reset ListenEvent me.bevankay.globalmoji`, relaunch, re-grant (the setup window has a button for this). Verify with `sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db"` (csreq cdhash) vs `codesign -d -r- Globalmoji.app`. A stable signing identity is the real cure.
 
 ## Assets
 - `make icon` rebuilds `App/Assets.xcassets/AppIcon.appiconset` from `Design/app-icon-source.png` via `Scripts/make-appiconset.py` (needs Pillow + numpy). Replace the source artwork, not the generated PNGs; the script cuts the squircle out of the white background and places it on Apple's 1024/824 icon grid.
