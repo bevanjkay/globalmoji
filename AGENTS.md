@@ -17,3 +17,7 @@
 ## Emoji data
 - `make emoji-data` regenerates `Packages/PickerCore/Sources/PickerCore/Resources/emoji.json` from emojibase-data (needs `node` ≥ 18, no npm install). Commit the regenerated file; tests assert on specific entries (`1F600`, `1F44B`, `1F44D`).
 - Emoji `character` strings include variation selectors as emitted by emojibase; compare by `id` (hexcode) in tests.
+
+## Input engine
+- `TriggerController` is pure logic and unit-tested with `KeyEvent`s; `KeyEventTap`/`TextInserter` touch CoreGraphics and can only be exercised by running the app with permissions granted.
+- Synthesised events carry `KeyEventTap.syntheticMarker` in `eventSourceUserData`; the tap ignores them so pasted/typed output never re-enters the trigger state machine.

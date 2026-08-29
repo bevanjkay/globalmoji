@@ -6,7 +6,7 @@ struct GlobalmojiApp: App {
 
     var body: some Scene {
         MenuBarExtra("Globalmoji", systemImage: "face.smiling") {
-            MenuBarMenu()
+            MenuBarMenu(appDelegate: appDelegate)
         }
         Settings {
             SettingsView()
