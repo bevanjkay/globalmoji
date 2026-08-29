@@ -15,11 +15,9 @@ struct GeneralSettingsView: View {
                         Text(key).font(.system(.body, design: .monospaced)).tag(key)
                     }
                 }
-                Stepper(
-                    "Show picker after \(store.settings.minimumCharacters) character\(store.settings.minimumCharacters == 1 ? "" : "s")",
-                    value: $store.settings.minimumCharacters,
-                    in: 1 ... 5
-                )
+                Stepper(value: $store.settings.minimumCharacters, in: 1 ... 5) {
+                    Text("Show picker after ^[\(store.settings.minimumCharacters) character](inflect: true)")
+                }
                 Text("Type \(store.settings.trigger)smile in any text field to search.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
