@@ -23,6 +23,7 @@
 		CE8424836BDAD75AC8473BF9 /* GlobalmojiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */; };
 		D3C6185BE11A44025EC5DF91 /* PickerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90649D9EF321AF72C85A42DC /* PickerModel.swift */; };
 		E602E86B0A999494293EAF7D /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB64BE95ACA5765F85B333 /* PickerView.swift */; };
+		EEC8CD6794DCE2697608A503 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5757BB1121FEF84457E94CF /* Assets.xcassets */; };
 		FBB3B3793D74D95615402BE6 /* AppRulesSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE29CCD4DA31C76B110F0EBE /* AppRulesSettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		AFBB8316906844B6105C2055 /* PickerCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PickerCore; path = Packages/PickerCore; sourceTree = SOURCE_ROOT; };
 		B8E221715D99935D02744B67 /* PickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerItem.swift; sourceTree = "<group>"; };
 		B926B3639E240B672C46525E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		C5757BB1121FEF84457E94CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD33CC10648793D51958E059 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE29CCD4DA31C76B110F0EBE /* AppRulesSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRulesSettingsView.swift; sourceTree = "<group>"; };
 		D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalmojiApp.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				CD33CC10648793D51958E059 /* AppDelegate.swift */,
+				C5757BB1121FEF84457E94CF /* Assets.xcassets */,
 				A7A83176EBEAA49F411E26B5 /* Globalmoji.entitlements */,
 				D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */,
 				73317AC521F4C74E59FE3B60 /* Info.plist */,
@@ -152,6 +155,7 @@
 			buildConfigurationList = DC0A2383EA1589FB8406F86E /* Build configuration list for PBXNativeTarget "Globalmoji" */;
 			buildPhases = (
 				1382CD2C9EDE873AEEB6C162 /* Sources */,
+				0D2D2896024760E8B76E724E /* Resources */,
 				EDA8AB0D799207C164AFE11A /* Frameworks */,
 			);
 			buildRules = (
@@ -204,6 +208,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		0D2D2896024760E8B76E724E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EEC8CD6794DCE2697608A503 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1382CD2C9EDE873AEEB6C162 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -250,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -320,6 +336,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -1,5 +1,6 @@
 excluded:
   - build
+  - Scripts
   - .build
   - Globalmoji.xcodeproj
   - Packages/*/.build
