@@ -25,7 +25,11 @@ final class PickerCoordinator: TriggerControllerDelegate {
         applySettings()
         model.onCommit = { [weak self] item in
             guard let self else { return }
-            insert(item.insertionText(skinTone: model.skinTone))
+            if case let .gif(gif) = item {
+                insert(gif: gif)
+            } else {
+                insert(item.insertionText(skinTone: model.skinTone))
+            }
         }
         controller.delegate = self
         tap.onKey = { [controller] event in controller.handle(event) }
@@ -71,9 +75,35 @@ final class PickerCoordinator: TriggerControllerDelegate {
         Task { await inserter.replaceTyped(count: count, with: text) }
     }
 
+    /// Replaces the typed `:query` with the GIF as image data, falling back to its URL.
+    func insert(gif: GIF) {
+        let count = controller.typedLength
+        controller.dismiss()
+        Task {
+            await inserter.deleteBackward(count: count)
+            if let data = await GIFImageCache.shared.data(for: gif.fullURL) {
+                await inserter.paste(
+                    imageData: data,
+                    type: NSPasteboard.PasteboardType("com.compuserve.gif"),
+                    fallbackURL: gif.fullURL
+                )
+            } else {
+                await inserter.insert(gif.fullURL.absoluteString)
+            }
+        }
+    }
+
+    private var bundledGiphyKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "GiphyAPIKey") as? String) ?? ""
+    }
+
     private func applySettings() {
         let current = settings.settings
         model.skinTone = current.skinTone
+        let giphyKey = current.giphyAPIKey.isEmpty ? bundledGiphyKey : current.giphyAPIKey
+        if (model.gifProvider as? GiphyProvider)?.apiKey != giphyKey {
+            model.gifProvider = giphyKey.isEmpty ? nil : GiphyProvider(apiKey: giphyKey)
+        }
         inserter.strategy = current.insertionStrategy == .paste ? .paste : .type
         let configuration = TriggerStateMachine.Configuration(
             trigger: current.triggerCharacter,

@@ -49,9 +49,7 @@ struct PickerView: View {
     @ViewBuilder
     private var content: some View {
         if model.mode == .gif {
-            Text("GIF search is coming soon.")
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, minHeight: 120)
+            gifContent
         } else if model.items.isEmpty {
             Text("No matches for “\(model.query)”")
                 .foregroundStyle(.secondary)
@@ -60,6 +58,59 @@ struct PickerView: View {
             list
         } else {
             grid
+        }
+    }
+
+    @ViewBuilder
+    private var gifContent: some View {
+        if let error = model.gifError {
+            Text(error)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, minHeight: 120)
+                .padding()
+        } else if model.items.isEmpty {
+            (model.isLoadingGIFs ? ProgressView().controlSize(.small).eraseToAnyView()
+                : Text("No GIFs for “\(model.query)”").foregroundStyle(.secondary).eraseToAnyView())
+                .frame(maxWidth: .infinity, minHeight: 120)
+        } else {
+            gifGrid
+        }
+    }
+
+    private var gifGrid: some View {
+        let size = (width - 16) / CGFloat(model.columns)
+        return ScrollViewReader { proxy in
+            ScrollView {
+                LazyVGrid(
+                    columns: Array(repeating: GridItem(.fixed(size), spacing: 0), count: model.columns),
+                    spacing: 0
+                ) {
+                    ForEach(Array(model.items.enumerated()), id: \.element.id) { index, item in
+                        if case let .gif(gif) = item {
+                            Button {
+                                model.commit(item)
+                            } label: {
+                                AnimatedImageView(url: gif.previewURL)
+                                    .frame(width: size - 6, height: size - 6)
+                                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                                    .padding(3)
+                                    .background(selectionBackground(selected: index == model.selectedIndex))
+                            }
+                            .buttonStyle(.plain)
+                            .id(item.id)
+                            .onHover { hovering in
+                                if hovering {
+                                    model.select(item)
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(8)
+            }
+            .frame(maxHeight: size * 3 + 16)
+            .onChange(of: model.selectedIndex) { _, _ in scrollToSelection(proxy) }
         }
     }
 
@@ -142,7 +193,11 @@ struct PickerView: View {
                 }
             }
             Spacer()
-            Text("↩ insert · ⇥ mode · esc close").font(.caption2).foregroundStyle(.tertiary)
+            if model.mode == .gif {
+                Text("Powered by GIPHY").font(.caption2).foregroundStyle(.tertiary)
+            } else {
+                Text("↩ insert · ⇥ mode · esc close").font(.caption2).foregroundStyle(.tertiary)
+            }
         }
         .font(.callout)
         .padding(.horizontal, 12)
@@ -158,5 +213,11 @@ struct PickerView: View {
         if let selected = model.selectedItem {
             proxy.scrollTo(selected.id, anchor: .center)
         }
+    }
+}
+
+private extension View {
+    func eraseToAnyView() -> AnyView {
+        AnyView(self)
     }
 }
