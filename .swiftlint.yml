@@ -1,0 +1,15 @@
+excluded:
+  - build
+  - .build
+  - Globalmoji.xcodeproj
+  - Packages/*/.build
+disabled_rules:
+  - trailing_comma
+  - opening_brace
+line_length:
+  warning: 120
+  error: 160
+identifier_name:
+  excluded: [id, up, x, y]
+nesting:
+  type_level: 2
