@@ -9,7 +9,7 @@ struct GlobalmojiApp: App {
             MenuBarMenu(appDelegate: appDelegate)
         }
         Settings {
-            SettingsView()
+            SettingsView(store: appDelegate.coordinator.settings)
         }
     }
 }

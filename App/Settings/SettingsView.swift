@@ -1,12 +1,18 @@
+import PickerCore
 import SwiftUI
 
 struct SettingsView: View {
+    let store: SettingsStore
+
     var body: some View {
-        Form {
-            Text("Globalmoji settings will appear here.")
-                .foregroundStyle(.secondary)
+        TabView {
+            Tab("General", systemImage: "gear") {
+                GeneralSettingsView(store: store)
+            }
+            Tab("Apps", systemImage: "app.badge.checkmark") {
+                AppRulesSettingsView(store: store)
+            }
         }
-        .formStyle(.grouped)
-        .frame(width: 480, height: 320)
+        .frame(width: 520, height: 420)
     }
 }
