@@ -16,6 +16,7 @@ settings:
     CODE_SIGN_STYLE: Automatic
     CODE_SIGN_IDENTITY: "-"
     GIPHY_API_KEY: ""
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
 packages:
   PickerCore:
     path: Packages/PickerCore
