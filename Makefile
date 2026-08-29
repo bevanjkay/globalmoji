@@ -30,4 +30,4 @@ package:
 	Scripts/package.sh
 
 icon:
-	swift Scripts/generate-icon.swift
+	python3 Scripts/make-appiconset.py
