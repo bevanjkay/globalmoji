@@ -12,13 +12,24 @@ final class PickerCoordinator: TriggerControllerDelegate {
     private let inserter = TextInserter()
     private var appRules = AppRules()
     private var observers: [NSObjectProtocol] = []
+    private let model: PickerModel
+    private let panel: PickerPanel
 
     private(set) var isRunning = false
 
-    init() {
+    init(catalog: EmojiCatalog) {
+        model = PickerModel(catalog: catalog, recents: RecentsStore(store: .applicationSupport, file: "recents.json"))
+        panel = PickerPanel(model: model)
+        model.onCommit = { [weak self] item in
+            guard let self else { return }
+            insert(item.insertionText(skinTone: model.skinTone))
+        }
         controller.delegate = self
         tap.onKey = { [controller] event in controller.handle(event) }
-        tap.onMouseDown = { [controller] in controller.mouseClicked() }
+        tap.onMouseDown = { [weak self] in
+            guard let self, !panel.contains(screenPoint: NSEvent.mouseLocation) else { return }
+            controller.mouseClicked()
+        }
         let center = NSWorkspace.shared.notificationCenter
         observers.append(center.addObserver(
             forName: NSWorkspace.didActivateApplicationNotification,
@@ -64,18 +75,19 @@ final class PickerCoordinator: TriggerControllerDelegate {
     }
 
     func triggerController(_: TriggerController, present query: String) {
-        logger.debug("present \(query)")
+        model.update(query: query)
+        panel.present(at: CaretLocator.anchorPoint())
     }
 
     func triggerController(_: TriggerController, update query: String) {
-        logger.debug("update \(query)")
+        model.update(query: query)
     }
 
     func triggerControllerDismiss(_: TriggerController) {
-        logger.debug("dismiss")
+        panel.dismiss()
     }
 
-    func triggerController(_: TriggerController, pickerHandle _: KeyEvent) -> Bool {
-        false
+    func triggerController(_: TriggerController, pickerHandle event: KeyEvent) -> Bool {
+        model.handle(event)
     }
 }
