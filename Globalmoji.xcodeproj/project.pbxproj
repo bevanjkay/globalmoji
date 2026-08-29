@@ -1,0 +1,399 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BBDC56E5542BF697F12ACFE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E476C14AAAC5FB2E3FA0C09 /* SettingsView.swift */; };
+		456698AB881355ED049D242D /* InputEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 289EA905A15B681418A350B7 /* InputEngine */; };
+		4978710B77B1C5F9D791DFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD33CC10648793D51958E059 /* AppDelegate.swift */; };
+		6B94CADCE094FD31B21DBD3D /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E13A3622AB9BF9A0F24AE /* Resources */; };
+		765C6F58FA12E0F062E44597 /* MenuBarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D345A8AB1CACBDF9F29E3ED /* MenuBarMenu.swift */; };
+		80E3379BA0F881C8DB212853 /* PickerCore in Frameworks */ = {isa = PBXBuildFile; productRef = B9748CCEC7C263C90858944F /* PickerCore */; };
+		CE8424836BDAD75AC8473BF9 /* GlobalmojiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1E476C14AAAC5FB2E3FA0C09 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		3D9E13A3622AB9BF9A0F24AE /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = SOURCE_ROOT; };
+		4C0656B44F1DB8267FCD1056 /* Globalmoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Globalmoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D345A8AB1CACBDF9F29E3ED /* MenuBarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarMenu.swift; sourceTree = "<group>"; };
+		73317AC521F4C74E59FE3B60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A7A83176EBEAA49F411E26B5 /* Globalmoji.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Globalmoji.entitlements; sourceTree = "<group>"; };
+		AFBB8316906844B6105C2055 /* PickerCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PickerCore; path = Packages/PickerCore; sourceTree = SOURCE_ROOT; };
+		CD33CC10648793D51958E059 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalmojiApp.swift; sourceTree = "<group>"; };
+		D7FC72C68098513F77041BC5 /* InputEngine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InputEngine; path = Packages/InputEngine; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EDA8AB0D799207C164AFE11A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80E3379BA0F881C8DB212853 /* PickerCore in Frameworks */,
+				456698AB881355ED049D242D /* InputEngine in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1AE9B597D5BD0AED358DBC7B = {
+			isa = PBXGroup;
+			children = (
+				3D9E13A3622AB9BF9A0F24AE /* Resources */,
+				F6F517BB053F70BDB9EA98CE /* App */,
+				B9592F53AD6C10EEFAC8E75D /* Packages */,
+				25AE2FC9194FBEA2897E6B0E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		25AE2FC9194FBEA2897E6B0E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C0656B44F1DB8267FCD1056 /* Globalmoji.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9BDF15B7DA11D1C8F803AC8D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1E476C14AAAC5FB2E3FA0C09 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B9592F53AD6C10EEFAC8E75D /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D7FC72C68098513F77041BC5 /* InputEngine */,
+				AFBB8316906844B6105C2055 /* PickerCore */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		D75FDD4A8A691EE6B9295B0E /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				6D345A8AB1CACBDF9F29E3ED /* MenuBarMenu.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		F6F517BB053F70BDB9EA98CE /* App */ = {
+			isa = PBXGroup;
+			children = (
+				CD33CC10648793D51958E059 /* AppDelegate.swift */,
+				A7A83176EBEAA49F411E26B5 /* Globalmoji.entitlements */,
+				D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */,
+				73317AC521F4C74E59FE3B60 /* Info.plist */,
+				D75FDD4A8A691EE6B9295B0E /* MenuBar */,
+				9BDF15B7DA11D1C8F803AC8D /* Settings */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E93DDFC6F603F8741328F54B /* Globalmoji */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC0A2383EA1589FB8406F86E /* Build configuration list for PBXNativeTarget "Globalmoji" */;
+			buildPhases = (
+				1382CD2C9EDE873AEEB6C162 /* Sources */,
+				0D2D2896024760E8B76E724E /* Resources */,
+				EDA8AB0D799207C164AFE11A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Globalmoji;
+			packageProductDependencies = (
+				B9748CCEC7C263C90858944F /* PickerCore */,
+				289EA905A15B681418A350B7 /* InputEngine */,
+			);
+			productName = Globalmoji;
+			productReference = 4C0656B44F1DB8267FCD1056 /* Globalmoji.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EA52CAF429B237C8412F7038 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					E93DDFC6F603F8741328F54B = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1D8DC24D9080CD2E4808D6CD /* Build configuration list for PBXProject "Globalmoji" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 1AE9B597D5BD0AED358DBC7B;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				877208D7AFF37752090B64D0 /* XCLocalSwiftPackageReference "Packages/InputEngine" */,
+				67E82BE1981B594E749F4593 /* XCLocalSwiftPackageReference "Packages/PickerCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 25AE2FC9194FBEA2897E6B0E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E93DDFC6F603F8741328F54B /* Globalmoji */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D2D2896024760E8B76E724E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6B94CADCE094FD31B21DBD3D /* Resources in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1382CD2C9EDE873AEEB6C162 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4978710B77B1C5F9D791DFB7 /* AppDelegate.swift in Sources */,
+				CE8424836BDAD75AC8473BF9 /* GlobalmojiApp.swift in Sources */,
+				765C6F58FA12E0F062E44597 /* MenuBarMenu.swift in Sources */,
+				0BBDC56E5542BF697F12ACFE /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5EEDA1EB331ACB6D775367E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Globalmoji.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.bevankay.globalmoji;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CD80DA7FFD3D3140A02B1B95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GIPHY_API_KEY = "";
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E1CA829C30FD14C04FE4A5A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GIPHY_API_KEY = "";
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		FCF48FBE6C60493360681D4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Globalmoji.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = me.bevankay.globalmoji;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D8DC24D9080CD2E4808D6CD /* Build configuration list for PBXProject "Globalmoji" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD80DA7FFD3D3140A02B1B95 /* Debug */,
+				E1CA829C30FD14C04FE4A5A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DC0A2383EA1589FB8406F86E /* Build configuration list for PBXNativeTarget "Globalmoji" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FCF48FBE6C60493360681D4E /* Debug */,
+				5EEDA1EB331ACB6D775367E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		67E82BE1981B594E749F4593 /* XCLocalSwiftPackageReference "Packages/PickerCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/PickerCore;
+		};
+		877208D7AFF37752090B64D0 /* XCLocalSwiftPackageReference "Packages/InputEngine" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/InputEngine;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		289EA905A15B681418A350B7 /* InputEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InputEngine;
+		};
+		B9748CCEC7C263C90858944F /* PickerCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PickerCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = EA52CAF429B237C8412F7038 /* Project object */;
+}
