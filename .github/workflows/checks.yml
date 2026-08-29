@@ -11,7 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_26.app
+        run: |
+          XCODE="$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
+          echo "Using $XCODE"
+          sudo xcode-select -s "$XCODE"
       - name: Install tools
         run: brew install xcodegen swiftlint swiftformat
       - name: Lint
