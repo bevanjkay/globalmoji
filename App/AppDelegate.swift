@@ -18,7 +18,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_: Notification) {
         NSApp.setActivationPolicy(.accessory)
+        guard !yieldToRunningInstance() else { return }
         startOrOnboard()
+    }
+
+    /// Two copies (e.g. a Debug build and the installed app) would both install event taps.
+    /// Hand off to the one already running and quit.
+    private func yieldToRunningInstance() -> Bool {
+        guard let bundleID = Bundle.main.bundleIdentifier else { return false }
+        let others = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
+            .filter { $0.processIdentifier != ProcessInfo.processInfo.processIdentifier }
+        guard let existing = others.first else { return false }
+        existing.activate()
+        NSApp.terminate(nil)
+        return true
     }
 
     func startOrOnboard() {

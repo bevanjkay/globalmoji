@@ -27,3 +27,4 @@
 
 ## Releases
 - `Scripts/package.sh [version]` archives, ad-hoc signs (override with `CODE_SIGN_IDENTITY`), and writes DMG/zip/SHA256SUMS to `dist/`. `release.yml` runs it on `v*` tags and publishes a GitHub Release; notarisation is not wired up until a Developer ID exists.
+- Only `keyDown` uses an active tap; mouse buttons are observed with a listen-only tap so a stalled process can never block clicks. Never run two instances with taps (the app quits if one is already running) — an earlier double launch froze all input.

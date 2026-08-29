@@ -33,6 +33,10 @@ final class PickerCoordinator: TriggerControllerDelegate {
         }
         controller.delegate = self
         tap.onKey = { [controller] event in controller.handle(event) }
+        tap.onStalled = { [weak self] in
+            self?.logger.error("Event tap disabled repeatedly by the system; stopped to keep input responsive")
+            self?.isRunning = false
+        }
         tap.onMouseDown = { [weak self] in
             guard let self, !panel.contains(screenPoint: NSEvent.mouseLocation) else { return }
             controller.mouseClicked()

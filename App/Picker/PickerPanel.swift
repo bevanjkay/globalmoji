@@ -33,7 +33,10 @@ final class PickerPanel: NSPanel {
     /// Shows the panel with its top-left at `anchor`, kept on screen.
     func present(at anchor: CGPoint) {
         contentViewController?.view.layoutSubtreeIfNeeded()
-        let size = contentViewController?.view.fittingSize ?? frame.size
+        var size = contentViewController?.view.fittingSize ?? frame.size
+        // Never let a layout glitch turn the transparent panel into a screen-covering click shield.
+        size.width = min(max(size.width, 200), 600)
+        size.height = min(max(size.height, 80), 500)
         var origin = CGPoint(x: anchor.x, y: anchor.y - size.height)
         let screen = NSScreen.screens.first { $0.frame.contains(anchor) } ?? NSScreen.main
         if let visible = screen?.visibleFrame {
