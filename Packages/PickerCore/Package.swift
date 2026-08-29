@@ -6,7 +6,7 @@ let package = Package(
     platforms: [.macOS(.v26)],
     products: [.library(name: "PickerCore", targets: ["PickerCore"])],
     targets: [
-        .target(name: "PickerCore"),
+        .target(name: "PickerCore", resources: [.copy("Resources/emoji.json")]),
         .testTarget(name: "PickerCoreTests", dependencies: ["PickerCore"]),
     ]
 )

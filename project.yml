@@ -27,8 +27,6 @@ targets:
     platform: macOS
     sources:
       - path: App
-      - path: Resources
-        type: folder
     dependencies:
       - package: PickerCore
       - package: InputEngine

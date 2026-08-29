@@ -10,7 +10,6 @@
 		0BBDC56E5542BF697F12ACFE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E476C14AAAC5FB2E3FA0C09 /* SettingsView.swift */; };
 		456698AB881355ED049D242D /* InputEngine in Frameworks */ = {isa = PBXBuildFile; productRef = 289EA905A15B681418A350B7 /* InputEngine */; };
 		4978710B77B1C5F9D791DFB7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD33CC10648793D51958E059 /* AppDelegate.swift */; };
-		6B94CADCE094FD31B21DBD3D /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 3D9E13A3622AB9BF9A0F24AE /* Resources */; };
 		765C6F58FA12E0F062E44597 /* MenuBarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D345A8AB1CACBDF9F29E3ED /* MenuBarMenu.swift */; };
 		80E3379BA0F881C8DB212853 /* PickerCore in Frameworks */ = {isa = PBXBuildFile; productRef = B9748CCEC7C263C90858944F /* PickerCore */; };
 		CE8424836BDAD75AC8473BF9 /* GlobalmojiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6BE3FD5C5AAB9372D021191 /* GlobalmojiApp.swift */; };
@@ -18,7 +17,6 @@
 
 /* Begin PBXFileReference section */
 		1E476C14AAAC5FB2E3FA0C09 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		3D9E13A3622AB9BF9A0F24AE /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = SOURCE_ROOT; };
 		4C0656B44F1DB8267FCD1056 /* Globalmoji.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Globalmoji.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D345A8AB1CACBDF9F29E3ED /* MenuBarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarMenu.swift; sourceTree = "<group>"; };
 		73317AC521F4C74E59FE3B60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -45,7 +43,6 @@
 		1AE9B597D5BD0AED358DBC7B = {
 			isa = PBXGroup;
 			children = (
-				3D9E13A3622AB9BF9A0F24AE /* Resources */,
 				F6F517BB053F70BDB9EA98CE /* App */,
 				B9592F53AD6C10EEFAC8E75D /* Packages */,
 				25AE2FC9194FBEA2897E6B0E /* Products */,
@@ -106,7 +103,6 @@
 			buildConfigurationList = DC0A2383EA1589FB8406F86E /* Build configuration list for PBXNativeTarget "Globalmoji" */;
 			buildPhases = (
 				1382CD2C9EDE873AEEB6C162 /* Sources */,
-				0D2D2896024760E8B76E724E /* Resources */,
 				EDA8AB0D799207C164AFE11A /* Frameworks */,
 			);
 			buildRules = (
@@ -158,17 +154,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		0D2D2896024760E8B76E724E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6B94CADCE094FD31B21DBD3D /* Resources in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1382CD2C9EDE873AEEB6C162 /* Sources */ = {

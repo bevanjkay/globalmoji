@@ -13,3 +13,7 @@
 
 ## Permissions when testing locally
 - Event taps need Input Monitoring; insertion needs Accessibility. macOS ties grants to the code signature, so sign dev builds with a stable identity (see `CODE_SIGN_IDENTITY` in `project.yml`) or you'll re-grant on every rebuild.
+
+## Emoji data
+- `make emoji-data` regenerates `Packages/PickerCore/Sources/PickerCore/Resources/emoji.json` from emojibase-data (needs `node` ≥ 18, no npm install). Commit the regenerated file; tests assert on specific entries (`1F600`, `1F44B`, `1F44D`).
+- Emoji `character` strings include variation selectors as emitted by emojibase; compare by `id` (hexcode) in tests.
