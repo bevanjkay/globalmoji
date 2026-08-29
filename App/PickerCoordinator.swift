@@ -17,9 +17,9 @@ final class PickerCoordinator: TriggerControllerDelegate {
 
     private(set) var isRunning = false
 
-    init(catalog: EmojiCatalog, store: JSONStore = .applicationSupport) {
+    init(emoji: EmojiCatalog, ascii: AsciiCatalog, store: JSONStore = .applicationSupport) {
         settings = SettingsStore(store: store)
-        model = PickerModel(catalog: catalog, recents: RecentsStore(store: store, file: "recents.json"))
+        model = PickerModel(emoji: emoji, ascii: ascii, recents: RecentsStore(store: store, file: "recents.json"))
         panel = PickerPanel(model: model)
         settings.onChange = { [weak self] _ in self?.applySettings() }
         applySettings()

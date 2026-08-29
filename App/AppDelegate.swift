@@ -9,9 +9,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     override init() {
         do {
-            coordinator = try PickerCoordinator(catalog: EmojiCatalog.bundled())
+            coordinator = try PickerCoordinator(emoji: EmojiCatalog.bundled(), ascii: AsciiCatalog.bundled())
         } catch {
-            fatalError("Bundled emoji dataset is missing or corrupt: \(error)")
+            fatalError("Bundled dataset is missing or corrupt: \(error)")
         }
         super.init()
     }

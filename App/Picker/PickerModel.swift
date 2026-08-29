@@ -6,19 +6,30 @@ import PickerCore
 @Observable
 final class PickerModel {
     private(set) var query = ""
+    private(set) var mode: PickerMode = .emoji
     private(set) var items: [PickerItem] = []
     private(set) var selectedIndex = 0
     var skinTone: SkinTone = .none
-    let columns = 8
     private let maxResults = 64
 
-    private let index: SearchIndex<Emoji>
+    private let emojiIndex: SearchIndex<Emoji>
+    private let asciiIndex: SearchIndex<AsciiArt>
     private let recents: RecentsStore
     var onCommit: ((PickerItem) -> Void)?
 
-    init(catalog: EmojiCatalog, recents: RecentsStore) {
-        index = SearchIndex(items: catalog.emoji)
+    init(emoji: EmojiCatalog, ascii: AsciiCatalog, recents: RecentsStore) {
+        emojiIndex = SearchIndex(items: emoji.emoji)
+        asciiIndex = SearchIndex(items: ascii.items)
         self.recents = recents
+    }
+
+    /// Grid width for the current mode; text results are a single column.
+    var columns: Int {
+        switch mode {
+        case .emoji: 8
+        case .gif: 3
+        case .ascii: 1
+        }
     }
 
     var selectedItem: PickerItem? {
@@ -27,10 +38,13 @@ final class PickerModel {
 
     func update(query: String) {
         self.query = query
-        let recents = recents.recents
-        items = index.search(query, limit: maxResults) { recents.boost(for: $0.id) }
-            .map { .emoji($0.item) }
-        selectedIndex = 0
+        refresh()
+    }
+
+    func setMode(_ mode: PickerMode) {
+        guard mode != self.mode else { return }
+        self.mode = mode
+        refresh()
     }
 
     func select(_ item: PickerItem) {
@@ -41,29 +55,45 @@ final class PickerModel {
 
     func commit(_ item: PickerItem? = nil) {
         guard let item = item ?? selectedItem else { return }
-        if case let .emoji(emoji) = item {
-            recents.record(emoji.id)
-        }
+        recents.record(item.id)
         onCommit?(item)
     }
 
     /// Returns `true` if the key was consumed.
     func handle(_ event: KeyEvent) -> Bool {
-        guard !items.isEmpty else { return event.key == .enter || event.key == .tab }
         switch event.key {
-        case .enter, .tab:
+        case .tab:
+            setMode(event.modifiers.contains(.shift) ? mode.previous : mode.next)
+            return true
+        case .enter:
             commit()
+            return true
         case .left:
             selectedIndex = max(selectedIndex - 1, 0)
         case .right:
-            selectedIndex = min(selectedIndex + 1, items.count - 1)
+            selectedIndex = min(selectedIndex + 1, max(items.count - 1, 0))
         case .up:
             selectedIndex = max(selectedIndex - columns, 0)
         case .down:
-            selectedIndex = selectedIndex + columns < items.count ? selectedIndex + columns : items.count - 1
+            selectedIndex = selectedIndex + columns < items.count ? selectedIndex + columns : max(items.count - 1, 0)
         default:
             return false
         }
         return true
+    }
+
+    private func refresh() {
+        let recents = recents.recents
+        switch mode {
+        case .emoji:
+            items = emojiIndex.search(query, limit: maxResults) { recents.boost(for: "emoji:\($0.id)") }
+                .map { .emoji($0.item) }
+        case .ascii:
+            items = asciiIndex.search(query, limit: maxResults) { recents.boost(for: "ascii:\($0.id)") }
+                .map { .ascii($0.item) }
+        case .gif:
+            items = []
+        }
+        selectedIndex = 0
     }
 }
