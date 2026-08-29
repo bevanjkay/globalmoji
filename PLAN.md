@@ -87,7 +87,7 @@ Globalmoji.xcodeproj            # generated from project.yml (XcodeGen); both co
 | 4 | Preferences | Settings window incl. per-app rules, trigger key, appearance, launch at login |
 | 5 | ASCII mode | Dataset + tab in picker |
 | 6 | GIF mode | Giphy provider, previews, image/URL insertion, API key handling |
-| 7 | Release | Signing/notarisation workflow, DMG, Homebrew cask, v1.0 |
+| 7 | Release | Tag-triggered workflow, DMG/zip, GitHub Release (notarisation + Homebrew cask once Developer ID exists) |
 | 8 | v2 | Favourites → image store → Sparkle |
 
 Each milestone is a PR (or a few) into `main`; nothing merged without approval.

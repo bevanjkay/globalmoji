@@ -21,3 +21,6 @@
 ## Input engine
 - `TriggerController` is pure logic and unit-tested with `KeyEvent`s; `KeyEventTap`/`TextInserter` touch CoreGraphics and can only be exercised by running the app with permissions granted.
 - Synthesised events carry `KeyEventTap.syntheticMarker` in `eventSourceUserData`; the tap ignores them so pasted/typed output never re-enters the trigger state machine.
+
+## Releases
+- `Scripts/package.sh [version]` archives, ad-hoc signs (override with `CODE_SIGN_IDENTITY`), and writes DMG/zip/SHA256SUMS to `dist/`. `release.yml` runs it on `v*` tags and publishes a GitHub Release; notarisation is not wired up until a Developer ID exists.

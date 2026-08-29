@@ -1,7 +1,7 @@
 SCHEME = Globalmoji
 DERIVED = build/DerivedData
 
-.PHONY: generate build test lint format clean emoji-data
+.PHONY: generate build test lint format clean emoji-data package
 
 generate:
 	xcodegen generate
@@ -25,3 +25,6 @@ clean:
 
 emoji-data:
 	node Scripts/generate-emoji-data.mjs
+
+package:
+	Scripts/package.sh
