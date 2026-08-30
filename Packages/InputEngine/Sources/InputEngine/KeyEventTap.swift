@@ -12,10 +12,17 @@ public final class KeyEventTap {
 
     public var onKey: Handler?
     public var onMouseDown: (() -> Void)?
+    /// Called when the system disabled the key tap repeatedly (the process stalled) and we gave up.
+    public var onStalled: (() -> Void)?
     public private(set) var isRunning = false
 
-    private var port: CFMachPort?
-    private var runLoopSource: CFRunLoopSource?
+    /// Active tap: only `keyDown`, so a stalled process can never hold up clicks.
+    private var keyTap: Tap?
+    /// Passive tap: mouse buttons are observed, never intercepted.
+    private var mouseTap: Tap?
+    private var timeoutTimestamps: [ContinuousClock.Instant] = []
+    private let maxTimeouts = 3
+    private let timeoutWindow: Duration = .seconds(10)
 
     public init() {}
 
@@ -25,41 +32,31 @@ public final class KeyEventTap {
 
     public func start() throws {
         guard !isRunning else { return }
-        let mask: CGEventMask = (1 << CGEventType.keyDown.rawValue)
-            | (1 << CGEventType.leftMouseDown.rawValue)
-            | (1 << CGEventType.rightMouseDown.rawValue)
         let userInfo = Unmanaged.passUnretained(self).toOpaque()
-        guard let port = CGEvent.tapCreate(
-            tap: .cgSessionEventTap,
-            place: .headInsertEventTap,
+        guard let keyTap = Tap.create(
+            mask: 1 << CGEventType.keyDown.rawValue,
             options: .defaultTap,
-            eventsOfInterest: mask,
-            callback: { _, type, event, userInfo in
-                guard let userInfo else { return Unmanaged.passUnretained(event) }
-                let tap = Unmanaged<KeyEventTap>.fromOpaque(userInfo).takeUnretainedValue()
-                let swallow = MainActor.assumeIsolated { tap.process(type: type, event: event) }
-                return swallow ? nil : Unmanaged.passUnretained(event)
-            },
             userInfo: userInfo
         ) else {
             throw TapError.creationFailed
         }
-        self.port = port
-        let source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, port, 0)
-        runLoopSource = source
-        CFRunLoopAddSource(CFRunLoopGetMain(), source, .commonModes)
-        CGEvent.tapEnable(tap: port, enable: true)
+        let mouseMask: CGEventMask = (1 << CGEventType.leftMouseDown.rawValue)
+            | (1 << CGEventType.rightMouseDown.rawValue)
+        let mouseTap = Tap.create(mask: mouseMask, options: .listenOnly, userInfo: userInfo)
+        self.keyTap = keyTap
+        self.mouseTap = mouseTap
+        keyTap.enable()
+        mouseTap?.enable()
         isRunning = true
     }
 
     public func stop() {
-        guard isRunning, let port else { return }
-        CGEvent.tapEnable(tap: port, enable: false)
-        if let runLoopSource {
-            CFRunLoopRemoveSource(CFRunLoopGetMain(), runLoopSource, .commonModes)
-        }
-        self.port = nil
-        runLoopSource = nil
+        guard isRunning else { return }
+        keyTap?.disable()
+        mouseTap?.disable()
+        keyTap = nil
+        mouseTap = nil
+        timeoutTimestamps.removeAll()
         isRunning = false
     }
 
@@ -67,9 +64,7 @@ public final class KeyEventTap {
     private func process(type: CGEventType, event: CGEvent) -> Bool {
         switch type {
         case .tapDisabledByTimeout, .tapDisabledByUserInput:
-            if let port {
-                CGEvent.tapEnable(tap: port, enable: true)
-            }
+            handleDisabled()
             return false
         case .leftMouseDown, .rightMouseDown:
             onMouseDown?()
@@ -79,6 +74,59 @@ public final class KeyEventTap {
             return onKey?(Self.keyEvent(from: event)) ?? false
         default:
             return false
+        }
+    }
+
+    /// macOS disables a tap whose process stops servicing events. Re-enable a few times, then give
+    /// up rather than freezing the user's input in a loop.
+    private func handleDisabled() {
+        let now = ContinuousClock.now
+        timeoutTimestamps.removeAll { now - $0 > timeoutWindow }
+        timeoutTimestamps.append(now)
+        if timeoutTimestamps.count > maxTimeouts {
+            stop()
+            onStalled?()
+            return
+        }
+        keyTap?.enable()
+        mouseTap?.enable()
+    }
+
+    @MainActor
+    private final class Tap {
+        let port: CFMachPort
+        let source: CFRunLoopSource
+
+        init(port: CFMachPort) {
+            self.port = port
+            source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, port, 0)
+            CFRunLoopAddSource(CFRunLoopGetMain(), source, .commonModes)
+        }
+
+        static func create(mask: CGEventMask, options: CGEventTapOptions, userInfo: UnsafeMutableRawPointer) -> Tap? {
+            guard let port = CGEvent.tapCreate(
+                tap: .cgSessionEventTap,
+                place: .headInsertEventTap,
+                options: options,
+                eventsOfInterest: mask,
+                callback: { _, type, event, userInfo in
+                    guard let userInfo else { return Unmanaged.passUnretained(event) }
+                    let tap = Unmanaged<KeyEventTap>.fromOpaque(userInfo).takeUnretainedValue()
+                    let swallow = MainActor.assumeIsolated { tap.process(type: type, event: event) }
+                    return swallow ? nil : Unmanaged.passUnretained(event)
+                },
+                userInfo: userInfo
+            ) else { return nil }
+            return Tap(port: port)
+        }
+
+        func enable() {
+            CGEvent.tapEnable(tap: port, enable: true)
+        }
+
+        func disable() {
+            CGEvent.tapEnable(tap: port, enable: false)
+            CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .commonModes)
         }
     }
 

@@ -19,6 +19,17 @@ xattr -d com.apple.quarantine /Applications/Globalmoji.app
 
 On launch, grant **Input Monitoring** and **Accessibility** when prompted (both are required — see below), then type `:` and a few letters in any text field.
 
+### Permissions look on but nothing happens?
+
+macOS ties Accessibility and Input Monitoring grants to the exact build that requested them. Because Globalmoji is not yet signed with a Developer ID, every update is a "new" binary and the old grants silently stop applying while System Settings still shows them on. Use **Reset permissions and try again** in the setup window (menu bar › Permissions…), or run:
+
+```sh
+tccutil reset Accessibility me.bevankay.globalmoji
+tccutil reset ListenEvent me.bevankay.globalmoji
+```
+
+then relaunch Globalmoji and grant both again.
+
 ## Usage
 
 - `:smi` → picker opens near the caret; arrow keys move, `↩` inserts, `esc` closes.

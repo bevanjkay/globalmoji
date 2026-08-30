@@ -5,6 +5,7 @@ import SwiftUI
 struct OnboardingView: View {
     @State private var accessibility = Permissions.accessibilityGranted
     @State private var inputMonitoring = Permissions.inputMonitoringGranted
+    @State private var showingResetHelp = false
     var onComplete: () -> Void
 
     var body: some View {
@@ -33,12 +34,15 @@ struct OnboardingView: View {
             )
 
             Spacer()
-            HStack {
-                Text(
-                    "Changes here can take a moment to apply. If a permission stays off, toggle it in System Settings."
-                )
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Toggles look on in System Settings but stay off here?")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Button("Reset permissions and try again") { showingResetHelp = true }
+                        .buttonStyle(.link)
+                        .font(.caption)
+                }
                 Spacer()
                 Button("Done", action: onComplete)
                     .keyboardShortcut(.defaultAction)
@@ -46,7 +50,21 @@ struct OnboardingView: View {
             }
         }
         .padding(24)
-        .frame(width: 520, height: 340)
+        .frame(width: 520, height: 360)
+        .confirmationDialog(
+            "Reset Globalmoji’s permissions?",
+            isPresented: $showingResetHelp,
+            titleVisibility: .visible
+        ) {
+            Button("Reset and Relaunch") {
+                Permissions.resetGrants()
+                Permissions.relaunch()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("macOS ties each grant to the exact build that asked for it, so after an update the switches can show "
+                + "on while this build is still blocked. Resetting clears them; you’ll be asked again after relaunch.")
+        }
         .task {
             while !Task.isCancelled {
                 accessibility = Permissions.accessibilityGranted
