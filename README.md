@@ -2,7 +2,7 @@
 
 A native, open-source macOS emoji picker in the style of Slack/Discord (and [Rocket](https://matthewpalmer.net/rocket/)). Type `:` followed by a name in any app to search emoji, GIFs and ASCII emoticons and insert them inline.
 
-**Status:** early development — see [PLAN.md](PLAN.md).
+**Status:** early development — see [PLAN.md](PLAN.md). Website: https://bevanjkay.github.io/globalmoji/
 
 ## Requirements
 
