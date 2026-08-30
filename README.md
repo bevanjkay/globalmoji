@@ -11,11 +11,11 @@ A native, open-source macOS emoji picker in the style of Slack/Discord (and [Roc
 
 ## Installing
 
-Download the latest DMG from [Releases](https://github.com/bevanjkay/globalmoji/releases) and drag Globalmoji to Applications. Builds are not yet notarised, so on first launch either right-click › Open, or run:
-
 ```sh
-xattr -d com.apple.quarantine /Applications/Globalmoji.app
+brew install --cask bevanjkay/tap/globalmoji
 ```
+
+Or download the latest DMG from [Releases](https://github.com/bevanjkay/globalmoji/releases) and drag Globalmoji to Applications. Builds from v0.1.0-alpha.2 onwards are signed with Developer ID and notarised.
 
 On launch, grant **Input Monitoring** and **Accessibility** when prompted (both are required — see below), then type `:` and a few letters in any text field.
 
