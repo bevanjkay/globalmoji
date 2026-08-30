@@ -23,8 +23,9 @@
 
 ## Input engine
 - `TriggerController` is pure logic and unit-tested with `KeyEvent`s; `KeyEventTap`/`TextInserter` touch CoreGraphics and can only be exercised by running the app with permissions granted.
+- Only `keyDown` uses an active tap; mouse buttons are observed with a listen-only tap so a stalled process can never block clicks. Never run two instances with taps (the app quits if one is already running) — an earlier double launch froze all input.
 - Synthesised events carry `KeyEventTap.syntheticMarker` in `eventSourceUserData`; the tap ignores them so pasted/typed output never re-enters the trigger state machine.
 
 ## Releases
-- `Scripts/package.sh [version]` archives, ad-hoc signs (override with `CODE_SIGN_IDENTITY`), and writes DMG/zip/SHA256SUMS to `dist/`. `release.yml` runs it on `v*` tags and publishes a GitHub Release; notarisation is not wired up until a Developer ID exists.
-- Only `keyDown` uses an active tap; mouse buttons are observed with a listen-only tap so a stalled process can never block clicks. Never run two instances with taps (the app quits if one is already running) — an earlier double launch froze all input.
+- `Scripts/package.sh [version]` archives, signs and writes DMG/zip/SHA256SUMS to `dist/`. With `CODE_SIGN_IDENTITY="Developer ID Application"` + `DEVELOPMENT_TEAM` it signs for distribution; with `ASC_KEY_ID`/`ASC_ISSUER_ID`/`ASC_KEY_PATH` it also notarises and staples the app and DMG. Without them it falls back to ad-hoc. `release.yml` runs it on `v*` tags using the `DEVELOPER_ID_P12`, `DEVELOPER_ID_P12_PASSWORD`, `APPLE_TEAM_ID`, `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_P8` secrets, and marks tags containing `-` as pre-releases.
+- Local App Store Connect key lives at `~/.appstoreconnect/private_keys/AuthKey_<KEYID>.p8` (where `notarytool` looks by default); the Developer ID private key/CSR are in `~/.appstoreconnect/`.

@@ -11,6 +11,9 @@ permissions:
 jobs:
   release:
     runs-on: macos-26
+    env:
+      HAS_CERT: ${{ secrets.DEVELOPER_ID_P12 != '' }}
+      HAS_ASC_KEY: ${{ secrets.ASC_KEY_P8 != '' }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -24,21 +27,66 @@ jobs:
         run: brew install xcodegen
       - name: Generate project
         run: make generate
+
+      - name: Import Developer ID certificate
+        id: cert
+        if: env.HAS_CERT == 'true'
+        env:
+          DEVELOPER_ID_P12: ${{ secrets.DEVELOPER_ID_P12 }}
+          DEVELOPER_ID_P12_PASSWORD: ${{ secrets.DEVELOPER_ID_P12_PASSWORD }}
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/signing.keychain-db"
+          KEYCHAIN_PASSWORD="$(uuidgen)"
+          echo "$DEVELOPER_ID_P12" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/cert.p12" -P "$DEVELOPER_ID_P12_PASSWORD" -A \
+            -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN" >/dev/null
+          security list-keychain -d user -s "$KEYCHAIN" login.keychain-db
+          rm "$RUNNER_TEMP/cert.p12"
+          echo "identity=Developer ID Application" >> "$GITHUB_OUTPUT"
+
+      - name: Write App Store Connect key
+        if: env.HAS_ASC_KEY == 'true'
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          echo "$ASC_KEY_P8" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
+          echo "ASC_KEY_PATH=$RUNNER_TEMP/AuthKey.p8" >> "$GITHUB_ENV"
+
       - name: Package
+        id: package
         env:
           GIPHY_API_KEY: ${{ secrets.GIPHY_API_KEY }}
+          CODE_SIGN_IDENTITY: ${{ steps.cert.outputs.identity || '-' }}
+          DEVELOPMENT_TEAM: ${{ secrets.APPLE_TEAM_ID }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
         run: Scripts/package.sh "${GITHUB_REF_NAME}"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Globalmoji-${{ github.ref_name }}
           path: dist/
+
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ github.token }}
+          NOTARIZED: ${{ steps.package.outputs.notarized }}
         run: |
+          PRERELEASE=()
+          [[ "${GITHUB_REF_NAME}" == *-* ]] && PRERELEASE=(--prerelease)
+          if [[ "$NOTARIZED" == "true" ]]; then
+            NOTES="Signed with Developer ID and notarised by Apple."
+          else
+            NOTES="This build is ad-hoc signed and not notarised. After installing, run \`xattr -d com.apple.quarantine /Applications/Globalmoji.app\` or right-click › Open the first time."
+          fi
           gh release create "${GITHUB_REF_NAME}" dist/* \
             --title "Globalmoji ${GITHUB_REF_NAME#v}" \
             --generate-notes \
-            --notes "Builds are currently ad-hoc signed and not notarised. After installing, run \`xattr -d com.apple.quarantine /Applications/Globalmoji.app\` or right-click › Open the first time."
+            --notes "$NOTES" \
+            "${PRERELEASE[@]}"
