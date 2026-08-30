@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Globalmoji — type : for emoji, GIFs and kaomoji in any Mac app</title>
+  <meta name="description" content="Globalmoji is a free, open-source macOS emoji picker. Type a colon in any app to search emoji, GIFs and ASCII faces and insert them inline.">
+  <link rel="icon" href="icon-256.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-256.png">
+  <meta property="og:title" content="Globalmoji">
+  <meta property="og:description" content="Type : for emoji, GIFs and kaomoji in any Mac app. Free and open source.">
+  <meta property="og:image" content="https://bevanjkay.github.io/globalmoji/icon.png">
+  <meta property="og:url" content="https://bevanjkay.github.io/globalmoji/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <img class="icon" src="icon.png" width="128" height="128" alt="Globalmoji app icon">
+      <h1>Globalmoji</h1>
+      <p class="tagline">Type <kbd>:</kbd> for emoji, GIFs and kaomoji — in any Mac app.</p>
+      <div class="cta">
+        <a class="button primary" id="download" href="https://github.com/bevanjkay/globalmoji/releases/latest">Download for macOS</a>
+        <a class="button" href="https://github.com/bevanjkay/globalmoji">View on GitHub</a>
+      </div>
+      <p class="meta"><span id="version">Latest release</span> · Requires macOS 26 · Signed &amp; notarised · MIT licensed</p>
+    </header>
+
+    <section class="demo" aria-label="Picker preview">
+      <div class="textfield">
+        <span>Ship it </span><span class="typed">:part</span><span class="caret"></span>
+      </div>
+      <div class="picker" role="img" aria-label="Globalmoji picker showing emoji results for “part”">
+        <div class="picker-header">
+          <span class="query">:part</span>
+          <span class="modes"><span class="mode active">Emoji</span><span class="mode">GIF</span><span class="mode">ASCII</span></span>
+        </div>
+        <div class="grid">
+          <span class="selected">🥳</span><span>🎉</span><span>🎊</span><span>🪩</span><span>🎈</span><span>🎂</span><span>🍰</span><span>🥂</span>
+          <span>🍾</span><span>🎁</span><span>🪅</span><span>🎆</span><span>🎇</span><span>🧨</span><span>✨</span><span>🎀</span>
+        </div>
+        <div class="picker-footer"><span>🥳 partying face <span class="dim">:partying_face:</span></span><span class="dim nowrap">↩ insert · ⇥ mode · esc close</span></div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div>
+        <h2>Emoji, GIFs, kaomoji</h2>
+        <p>Search 1,900+ emoji by name, keyword or Slack/GitHub shortcode. <kbd>⇥</kbd> switches to GIPHY GIF search or a curated set of ASCII faces like <span class="nowrap">¯\_(ツ)_/¯</span>.</p>
+      </div>
+      <div>
+        <h2>Works everywhere you type</h2>
+        <p>Slack, Mail, Notes, browsers, terminals — the picker appears beside your caret and inserts inline. Choose which apps it’s active in.</p>
+      </div>
+      <div>
+        <h2>Open source, no account</h2>
+        <p>MIT licensed Swift. Nothing leaves your Mac except GIF searches. Signed with Developer ID and notarised by Apple.</p>
+      </div>
+    </section>
+
+    <section class="install">
+      <h2>Install</h2>
+      <pre><code>brew install --cask bevanjkay/tap/globalmoji</code></pre>
+      <p>or download the DMG above and drag Globalmoji to Applications. On first launch, grant <strong>Input Monitoring</strong> and <strong>Accessibility</strong> — that’s how it sees the <kbd>:</kbd> and inserts your pick.</p>
+    </section>
+
+    <footer>
+      <p>Made by <a href="https://bevankay.me">Bevan Kay</a> · <a href="https://github.com/bevanjkay/globalmoji/issues">Report an issue</a> · <a href="https://github.com/bevanjkay/globalmoji/releases">All releases</a></p>
+    </footer>
+  </main>
+  <script>
+    fetch("https://api.github.com/repos/bevanjkay/globalmoji/releases?per_page=5")
+      .then(r => r.ok ? r.json() : [])
+      .then(releases => {
+        const release = releases.find(r => !r.draft);
+        if (!release) return;
+        const dmg = release.assets.find(a => a.name.endsWith(".dmg"));
+        if (dmg) document.getElementById("download").href = dmg.browser_download_url;
+        document.getElementById("version").textContent = release.tag_name.replace(/^v/, "") + (release.prerelease ? " (pre-release)" : "");
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
