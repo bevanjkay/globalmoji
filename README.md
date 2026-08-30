@@ -46,7 +46,7 @@ make test
 make package    # Release archive → dist/Globalmoji-<version>.dmg and .zip
 ```
 
-Releases are cut by pushing a `v*` tag; `.github/workflows/release.yml` builds, packages and publishes the GitHub Release. Set a `GIPHY_API_KEY` repository secret to bake a shared key into release builds.
+Releases are cut by pushing a `v*` tag; `.github/workflows/release.yml` builds, signs, notarises (when the Developer ID and App Store Connect secrets are configured) and publishes the GitHub Release. Set a `GIPHY_API_KEY` repository secret to bake a shared key into release builds.
 
 Globalmoji needs the **Accessibility** and **Input Monitoring** permissions to observe the `:` trigger and insert text. It runs outside the App Sandbox and is not distributed via the Mac App Store.
 
