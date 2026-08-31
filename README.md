@@ -48,7 +48,7 @@ Your settings and recents stay on your Mac, in `~/Library/Application Support/Gl
 
 ## Troubleshooting
 
-**The picker doesn't appear, but permissions look enabled.** macOS ties Accessibility and Input Monitoring grants to the exact build that requested them, so an update can silently invalidate them while System Settings still shows them on. Use **Reset permissions and try again** in the setup window (menu bar › Permissions…), or run:
+**The picker doesn't appear, but permissions look enabled.** This happens when the app that was granted permission isn't the app that's running: macOS ties each grant to the signature of the build that requested it. Signed releases keep their grants across updates, but you'll hit this if you're upgrading from a v0.1.0-alpha.1 build (those weren't signed with a Developer ID) or running a build you compiled yourself. Use **Reset permissions and try again** in the setup window (menu bar › Permissions…), or run:
 
 ```sh
 tccutil reset Accessibility me.bevankay.globalmoji
