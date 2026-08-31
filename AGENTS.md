@@ -5,6 +5,8 @@
 - `make build` builds the app; `make test` runs the SwiftPM package tests (`Packages/PickerCore`, `Packages/InputEngine`).
 - `make lint` runs `swiftformat --lint` and `swiftlint`.
 - Core logic lives in the local SwiftPM packages; keep AppKit/SwiftUI out of `PickerCore` so it stays testable with `swift test`.
+- CI runs `zizmor` and `actionlint` over `.github/`; every action must be commit-pinned with a `# <tag>` comment. Run both locally before pushing workflow changes.
+- Add remote SwiftPM dependencies to `Packages/*`, not the app target: the app's `Package.resolved` lands under the gitignored `*.xcodeproj/**/swiftpm/`, where Dependabot and osv-scanner never see it.
 
 ## Conventions
 - Swift 6 strict concurrency; new types should be `Sendable` or isolated to `@MainActor`.
