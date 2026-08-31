@@ -1,27 +1,54 @@
-# Globalmoji
+<h1 align="center">Globalmoji</h1>
 
-A native, open-source macOS emoji picker in the style of Slack/Discord (and [Rocket](https://matthewpalmer.net/rocket/)). Type `:` followed by a name in any app to search emoji, GIFs and ASCII emoticons and insert them inline.
+<p align="center">Type <code>:</code> for emoji, GIFs and kaomoji — in any Mac app.</p>
 
-**Status:** early development — see [PLAN.md](PLAN.md). Website: https://bevanjkay.github.io/globalmoji/
+<p align="center">
+  <a href="https://github.com/bevanjkay/globalmoji/releases/latest">Download</a> ·
+  <a href="https://bevanjkay.github.io/globalmoji/">Website</a> ·
+  <a href="https://github.com/bevanjkay/globalmoji/issues">Report an issue</a>
+</p>
 
-## Requirements
+Globalmoji is a free, open-source emoji picker for macOS in the style of Slack and Discord. Type `:` followed by a name in any text field — Slack, Mail, Notes, browsers, terminals — and the picker appears beside your caret so you can insert emoji, GIFs and ASCII faces inline.
 
-- macOS 26 (Tahoe) or later
-- Xcode 26 (to build)
-
-## Installing
+## Install
 
 ```sh
 brew install --cask bevanjkay/tap/globalmoji
 ```
 
-Or download the latest DMG from [Releases](https://github.com/bevanjkay/globalmoji/releases) and drag Globalmoji to Applications. Builds from v0.1.0-alpha.2 onwards are signed with Developer ID and notarised.
+Or download the DMG from [Releases](https://github.com/bevanjkay/globalmoji/releases/latest) and drag Globalmoji to Applications. Requires **macOS 26 (Tahoe)** or later. Builds are signed with Developer ID and notarised by Apple.
 
-On launch, grant **Input Monitoring** and **Accessibility** when prompted (both are required — see below), then type `:` and a few letters in any text field.
+On first launch, grant **Input Monitoring** and **Accessibility** when prompted. Both are required: one lets Globalmoji see the `:` you type, the other lets it insert your pick.
 
-### Permissions look on but nothing happens?
+## Using it
 
-macOS ties Accessibility and Input Monitoring grants to the exact build that requested them. Because Globalmoji is not yet signed with a Developer ID, every update is a "new" binary and the old grants silently stop applying while System Settings still shows them on. Use **Reset permissions and try again** in the setup window (menu bar › Permissions…), or run:
+Type `:` and a few letters in any text field:
+
+| Key | Action |
+| --- | --- |
+| `↑` `↓` `←` `→` | Move the selection |
+| `↩` | Insert the selected item |
+| `⇥` / `⇧⇥` | Switch between Emoji, GIF and ASCII |
+| `esc` | Close the picker |
+
+- **Emoji** — 1,900+ emoji searchable by name, keyword or Slack/GitHub shortcode. Recently used emoji are boosted in results.
+- **GIF** — GIPHY search. GIFs are pasted as image data with the link as a fallback, so Slack and Discord get the image and plain-text apps get the link.
+- **ASCII** — a curated set of kaomoji like `¯\_(ツ)_/¯`.
+
+Globalmoji lives in the menu bar. Open **Settings** from there to:
+
+- change the trigger key (`:`, `;`, `/`, `\` or `` ` ``) and how many characters you type before the picker opens
+- pick a default skin tone
+- choose whether items are inserted by pasting or by typing
+- launch Globalmoji at login
+- add your own GIPHY API key (release builds include a shared one, which is rate limited)
+- turn Globalmoji off in specific apps, or limit it to only the apps you choose
+
+Your settings and recents stay on your Mac, in `~/Library/Application Support/Globalmoji/`. Nothing is sent anywhere except GIF searches to GIPHY.
+
+## Troubleshooting
+
+**The picker doesn't appear, but permissions look enabled.** macOS ties Accessibility and Input Monitoring grants to the exact build that requested them, so an update can silently invalidate them while System Settings still shows them on. Use **Reset permissions and try again** in the setup window (menu bar › Permissions…), or run:
 
 ```sh
 tccutil reset Accessibility me.bevankay.globalmoji
@@ -30,25 +57,21 @@ tccutil reset ListenEvent me.bevankay.globalmoji
 
 then relaunch Globalmoji and grant both again.
 
-## Usage
+**GIF search returns nothing.** The shared API key may be rate limited — add your own free key under Settings › GIFs.
 
-- `:smi` → picker opens near the caret; arrow keys move, `↩` inserts, `esc` closes.
-- `⇥` / `⇧⇥` switch between Emoji, GIF and ASCII modes.
-- GIF search needs a GIPHY API key: release builds include a shared key, or paste your own under Settings › GIFs.
-- Settings › Apps controls where the trigger is active (deny-list or allow-list by bundle ID).
+Still stuck? [Open an issue](https://github.com/bevanjkay/globalmoji/issues).
 
-## Building
+## Contributing
+
+Globalmoji is written in Swift with SwiftUI and AppKit. Building needs Xcode 26:
 
 ```sh
-make generate   # regenerate Globalmoji.xcodeproj from project.yml (requires xcodegen)
+make generate   # regenerate the Xcode project (requires xcodegen)
 make build
 make test
-make package    # Release archive → dist/Globalmoji-<version>.dmg and .zip
 ```
 
-Releases are cut by pushing a `v*` tag; `.github/workflows/release.yml` builds, signs, notarises (when the Developer ID and App Store Connect secrets are configured) and publishes the GitHub Release. Set a `GIPHY_API_KEY` repository secret to bake a shared key into release builds.
-
-Globalmoji needs the **Accessibility** and **Input Monitoring** permissions to observe the `:` trigger and insert text. It runs outside the App Sandbox and is not distributed via the Mac App Store.
+See [AGENTS.md](AGENTS.md) for conventions, packaging and release details, and [PLAN.md](PLAN.md) for what's next. Issues and pull requests are welcome.
 
 ## License
 
