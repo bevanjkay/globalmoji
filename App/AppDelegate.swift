@@ -27,14 +27,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             object: nil,
             queue: .main
         ) { _ in
-            Task { @MainActor in AppDelegate.openSettings() }
+            Task { @MainActor in SettingsWindow.show() }
         }
         startOrOnboard()
     }
 
     /// Launching an already-running menu bar app has nothing to bring forward, so show settings instead.
     func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows _: Bool) -> Bool {
-        Self.openSettings()
+        SettingsWindow.show()
         return false
     }
 
@@ -54,11 +54,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         existing.activate()
         NSApp.terminate(nil)
         return true
-    }
-
-    private static func openSettings() {
-        NSApp.activate()
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
 
     func startOrOnboard() {

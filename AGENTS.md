@@ -10,6 +10,7 @@
 - Swift 6 strict concurrency; new types should be `Sendable` or isolated to `@MainActor`.
 - Minimum macOS 26; bundle ID `me.bevankay.globalmoji`.
 - Per-app rules, settings, recents and favourites persist as Codable JSON under `~/Library/Application Support/Globalmoji/`.
+- Opening the SwiftUI `Settings` scene from AppKit: `NSApp.sendAction("showSettingsWindow:")` finds a target and returns `true` but is a silent no-op. Use the `openSettings` environment action, captured from the `MenuBarExtra` label into `SettingsWindow` (`App/GlobalmojiApp.swift`), and activate on the next runloop tick or the window opens behind other apps.
 
 ## Permissions when testing locally
 - Event taps need Input Monitoring; insertion needs Accessibility. TCC pins grants to the cdhash of ad-hoc signed builds, so every rebuild/reinstall silently invalidates them while System Settings still shows them on. Fix: `tccutil reset Accessibility me.bevankay.globalmoji && tccutil reset ListenEvent me.bevankay.globalmoji`, relaunch, re-grant (the setup window has a button for this). Verify with `sqlite3 "/Library/Application Support/com.apple.TCC/TCC.db"` (csreq cdhash) vs `codesign -d -r- Globalmoji.app`. A stable signing identity is the real cure.
