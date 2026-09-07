@@ -184,7 +184,7 @@ struct PickerView: View {
     private var footer: some View {
         HStack(spacing: 8) {
             if let item = model.selectedItem {
-                if model.mode == .emoji {
+                if model.mode == .emoji || model.mode == .symbol {
                     Text(item.insertionText(skinTone: model.skinTone)).font(.title3)
                 }
                 Text(item.title).lineLimit(1)

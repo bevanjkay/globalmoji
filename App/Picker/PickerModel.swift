@@ -25,19 +25,21 @@ final class PickerModel {
 
     private let emojiIndex: SearchIndex<Emoji>
     private let asciiIndex: SearchIndex<AsciiArt>
+    private let symbolIndex: SearchIndex<TextSymbol>
     private let recents: RecentsStore
     var onCommit: ((PickerItem) -> Void)?
 
-    init(emoji: EmojiCatalog, ascii: AsciiCatalog, recents: RecentsStore) {
+    init(emoji: EmojiCatalog, ascii: AsciiCatalog, symbols: SymbolCatalog, recents: RecentsStore) {
         emojiIndex = SearchIndex(items: emoji.emoji)
         asciiIndex = SearchIndex(items: ascii.items)
+        symbolIndex = SearchIndex(items: symbols.items)
         self.recents = recents
     }
 
     /// Grid width for the current mode; text results are a single column.
     var columns: Int {
         switch mode {
-        case .emoji: 8
+        case .emoji, .symbol: 8
         case .gif: 3
         case .ascii: 1
         }
@@ -102,6 +104,9 @@ final class PickerModel {
         case .ascii:
             items = asciiIndex.search(query, limit: maxResults) { recents.boost(for: "ascii:\($0.id)") }
                 .map { .ascii($0.item) }
+        case .symbol:
+            items = symbolIndex.search(query, limit: maxResults) { recents.boost(for: "symbol:\($0.id)") }
+                .map { .symbol($0.item) }
         case .gif:
             items = []
             searchGIFs()
