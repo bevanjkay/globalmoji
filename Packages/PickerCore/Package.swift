@@ -6,7 +6,14 @@ let package = Package(
     platforms: [.macOS(.v26)],
     products: [.library(name: "PickerCore", targets: ["PickerCore"])],
     targets: [
-        .target(name: "PickerCore", resources: [.copy("Resources/emoji.json"), .copy("Resources/ascii.json")]),
+        .target(
+            name: "PickerCore",
+            resources: [
+                .copy("Resources/emoji.json"),
+                .copy("Resources/ascii.json"),
+                .copy("Resources/symbols.json"),
+            ]
+        ),
         .testTarget(name: "PickerCoreTests", dependencies: ["PickerCore"]),
     ]
 )

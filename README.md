@@ -8,7 +8,7 @@
   <a href="https://github.com/bevanjkay/globalmoji/issues">Report an issue</a>
 </p>
 
-Globalmoji is a free, open-source emoji picker for macOS in the style of Slack and Discord. Type `:` followed by a name in any text field — Slack, Mail, Notes, browsers, terminals — and the picker appears beside your caret so you can insert emoji, GIFs and ASCII faces inline.
+Globalmoji is a free, open-source emoji picker for macOS in the style of Slack and Discord. Type `:` followed by a name in any text field — Slack, Mail, Notes, browsers, terminals — and the picker appears beside your caret so you can insert emoji, GIFs, ASCII faces and symbols inline.
 
 ## Install
 
@@ -28,12 +28,13 @@ Type `:` and a few letters in any text field:
 | --- | --- |
 | `↑` `↓` `←` `→` | Move the selection |
 | `↩` | Insert the selected item |
-| `⇥` / `⇧⇥` | Switch between Emoji, GIF and ASCII |
+| `⇥` / `⇧⇥` | Switch between Emoji, GIF, ASCII and Symbols |
 | `esc` | Close the picker |
 
 - **Emoji** — 1,900+ emoji searchable by name, keyword or Slack/GitHub shortcode. Recently used emoji are boosted in results.
 - **GIF** — GIPHY search. GIFs are pasted as image data with the link as a fallback, so Slack and Discord get the image and plain-text apps get the link.
 - **ASCII** — a curated set of kaomoji like `¯\_(ツ)_/¯`.
+- **Symbols** — arrows, maths, currency, punctuation, Greek letters and Mac key glyphs like `⌘` and `→`.
 
 Globalmoji lives in the menu bar. Open **Settings** from there to:
 

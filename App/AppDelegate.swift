@@ -12,7 +12,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     override init() {
         do {
-            coordinator = try PickerCoordinator(emoji: EmojiCatalog.bundled(), ascii: AsciiCatalog.bundled())
+            coordinator = try PickerCoordinator(
+                emoji: EmojiCatalog.bundled(),
+                ascii: AsciiCatalog.bundled(),
+                symbols: SymbolCatalog.bundled()
+            )
         } catch {
             fatalError("Bundled dataset is missing or corrupt: \(error)")
         }

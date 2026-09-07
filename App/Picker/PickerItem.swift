@@ -4,12 +4,14 @@ enum PickerMode: Int, CaseIterable {
     case emoji
     case gif
     case ascii
+    case symbol
 
     var title: String {
         switch self {
         case .emoji: "Emoji"
         case .gif: "GIF"
         case .ascii: "ASCII"
+        case .symbol: "Symbols"
         }
     }
 
@@ -26,12 +28,14 @@ enum PickerMode: Int, CaseIterable {
 enum PickerItem: Identifiable, Hashable {
     case emoji(Emoji)
     case ascii(AsciiArt)
+    case symbol(TextSymbol)
     case gif(GIF)
 
     var id: String {
         switch self {
         case let .emoji(emoji): "emoji:\(emoji.id)"
         case let .ascii(art): "ascii:\(art.id)"
+        case let .symbol(symbol): "symbol:\(symbol.id)"
         case let .gif(gif): "gif:\(gif.id)"
         }
     }
@@ -40,6 +44,7 @@ enum PickerItem: Identifiable, Hashable {
         switch self {
         case let .emoji(emoji): emoji.name
         case let .ascii(art): art.name
+        case let .symbol(symbol): symbol.name
         case let .gif(gif): gif.title
         }
     }
@@ -47,7 +52,7 @@ enum PickerItem: Identifiable, Hashable {
     var subtitle: String? {
         switch self {
         case let .emoji(emoji): emoji.shortcodes.first.map { ":\($0):" }
-        case .ascii, .gif: nil
+        case .ascii, .symbol, .gif: nil
         }
     }
 
@@ -56,6 +61,7 @@ enum PickerItem: Identifiable, Hashable {
         switch self {
         case let .emoji(emoji): emoji.character(with: skinTone)
         case let .ascii(art): art.text
+        case let .symbol(symbol): symbol.text
         case let .gif(gif): gif.fullURL.absoluteString
         }
     }
